@@ -7,6 +7,11 @@
   <img src="https://img.shields.io/badge/iOS-Supported-black?style=for-the-badge&logo=apple" alt="iOS" />
   <img src="https://img.shields.io/badge/Android-Supported-green?style=for-the-badge&logo=android" alt="Android" />
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
+
+  <br/>
+  <br/>
+
+  <img src="./images/example.png" width="250" alt="Example" />
 </div>
 
 <br/>
