@@ -167,8 +167,8 @@ const Barcode: React.FC<BarcodeProps> = ({
     qr.addData(inputText);
     qr.make();
     const rowCount = qr.getModuleCount();
-    const modules: { x: number; y: number; width: number; height: number }[] = [];
-    const cellSize = width;
+    const rects: string[] = [];
+    const cellSize = 100; // Use high-precision coordinates to avoid rounding errors on Android
 
     const margin = 4;
     const size = (rowCount + margin * 2) * cellSize;
@@ -181,19 +181,21 @@ const Barcode: React.FC<BarcodeProps> = ({
           while (col < rowCount && qr.isDark(row, col)) {
             col++;
           }
-          modules.push({
-            x: (startCol + margin) * cellSize,
-            y: (row + margin) * cellSize,
-            width: (col - startCol) * cellSize,
-            height: cellSize,
-          });
+          rects.push(
+            drawRect(
+              (startCol + margin) * cellSize,
+              (row + margin) * cellSize,
+              (col - startCol) * cellSize,
+              cellSize
+            )
+          );
         } else {
           col++;
         }
       }
     }
 
-    return { modules, size };
+    return { rects, size };
   };
 
   const encode = (inputText: string, Encoder: any) => {
@@ -217,10 +219,10 @@ const Barcode: React.FC<BarcodeProps> = ({
   const { bars, barCodeWidth, barCodeHeight, qrSize } = useMemo(() => {
     try {
       if (type === 'qrcode') {
-        const { modules, size: qrInternalSize } = drawSvgQrCode(value);
-        const finalSize = size || qrInternalSize;
+        const { rects, size: qrInternalSize } = drawSvgQrCode(value);
+        const finalSize = size || qrInternalSize / 100 * width;
         return {
-          bars: modules,
+          bars: rects,
           barCodeWidth: finalSize,
           barCodeHeight: finalSize,
           qrSize: qrInternalSize,
@@ -293,23 +295,15 @@ const Barcode: React.FC<BarcodeProps> = ({
         viewBox={type === 'qrcode' ? `0 0 ${svgQrInternalSize} ${svgQrInternalSize}` : undefined}
         preserveAspectRatio="xMidYMid meet"
       >
-        {type === 'qrcode' ? (
-          <>
-            <Path
-              d={drawRect(0, 0, svgQrInternalSize, svgQrInternalSize)}
-              fill={background}
-            />
-            {(bars as any[]).map((m, i) => (
-              <Path
-                key={`q-${i}`}
-                d={drawRect(m.x, m.y, m.width, m.height)}
-                fill={lineColor}
-              />
-            ))}
-          </>
-        ) : (
-          <Path d={(bars as string[]).join(' ')} />
-        )}
+        <Path
+          d={
+            type === 'qrcode'
+              ? drawRect(0, 0, svgQrInternalSize, svgQrInternalSize)
+              : ''
+          }
+          fill={background}
+        />
+        <Path d={type === 'qrcode' ? (bars as string[]).join(' ') : (bars as string[]).join(' ')} />
       </Svg>
       {text && (
         <Text style={[{ textAlign: 'center' }, textStyle] as any}>{text}</Text>

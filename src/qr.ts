@@ -262,7 +262,6 @@ export class QRCodeModel {
         const data = this.dataList[j];
         buffer.put(data.mode, 4);
         buffer.put(data.data.length, QRUtil.getLengthInBits(data.mode, i));
-        // Simple byte encoding
         for (let k = 0; k < data.data.length; k++) {
           buffer.put(data.data.charCodeAt(k), 8);
         }
@@ -354,6 +353,7 @@ export class QRCodeModel {
 
     const data = new Array(totalCodeCount);
     let index = 0;
+
     for (let i = 0; i < maxDcCount; i++) {
       for (let r = 0; r < rsBlocks.length; r++) {
         if (i < dcdata[r].length) {
@@ -361,6 +361,7 @@ export class QRCodeModel {
         }
       }
     }
+
     for (let i = 0; i < maxEcCount; i++) {
       for (let r = 0; r < rsBlocks.length; r++) {
         if (i < ecdata[r].length) {
@@ -368,6 +369,7 @@ export class QRCodeModel {
         }
       }
     }
+
     return data;
   }
 }
@@ -420,12 +422,6 @@ class QRRSBlock {
     this.totalCount = totalCount;
     this.dataCount = dataCount;
   }
-  static rsBlockTable = [
-    [1, 26, 19], [1, 26, 16], [1, 26, 13], [1, 26, 9],
-    [1, 44, 34], [1, 44, 28], [1, 44, 22], [1, 44, 16],
-    [1, 70, 55], [1, 70, 44], [2, 35, 17], [2, 35, 13],
-    [1, 100, 80], [2, 50, 32], [2, 50, 24], [4, 25, 9]
-  ];
   static getRSBlocks(typeNumber: number, errorCorrectionLevel: QRErrorCorrectionLevel): QRRSBlock[] {
     const list = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectionLevel);
     if (list == null) {
@@ -452,15 +448,29 @@ class QRRSBlock {
       default: return null;
     }
   }
-  static rsBlockTableL = [[1, 26, 19], [1, 44, 34], [1, 70, 55], [1, 100, 80], [1, 134, 108], [2, 86, 68], [2, 98, 78], [2, 121, 97], [2, 146, 116], [2, 192, 156]];
-  static rsBlockTableM = [[1, 26, 16], [1, 44, 28], [1, 70, 44], [2, 50, 32], [2, 64, 48], [4, 43, 27], [4, 49, 31], [4, 60, 38], [4, 73, 46], [4, 96, 60]];
-  static rsBlockTableQ = [[1, 26, 13], [1, 44, 22], [2, 35, 17], [2, 50, 24], [2, 81, 43], [4, 50, 26], [6, 50, 26], [6, 53, 29], [8, 61, 31], [8, 72, 36]];
-  static rsBlockTableH = [[1, 26, 9], [1, 44, 16], [2, 35, 13], [4, 25, 9], [2, 33, 15], [4, 24, 11], [4, 28, 13], [4, 33, 15], [4, 39, 17], [4, 45, 19]];
+
+  static rsBlockTableL = [
+    [1, 26, 19], [1, 44, 34], [1, 70, 55], [1, 100, 80], [1, 134, 108], [2, 86, 68], [2, 98, 78], [2, 121, 97], [2, 146, 116], [2, 192, 156],
+    [2, 259, 213], [2, 332, 274], [4, 193, 159], [2, 339, 279], [2, 423, 349], [4, 311, 255], [4, 415, 341], [4, 535, 439], [4, 603, 497], [4, 666, 548]
+  ];
+  static rsBlockTableM = [
+    [1, 26, 16], [1, 44, 28], [1, 70, 44], [2, 50, 32], [2, 64, 48], [4, 43, 27], [4, 49, 31], [4, 60, 38], [4, 73, 46], [4, 96, 60],
+    [4, 119, 74], [4, 137, 86], [4, 155, 98], [4, 177, 110], [6, 155, 95], [6, 193, 119], [6, 230, 142], [6, 253, 156], [7, 283, 177], [8, 341, 213]
+  ];
+  static rsBlockTableQ = [
+    [1, 26, 13], [1, 44, 22], [2, 35, 17], [2, 50, 24], [2, 81, 43], [4, 50, 26], [6, 50, 26], [6, 53, 29], [8, 61, 31], [8, 72, 36],
+    [8, 91, 45], [10, 93, 46], [12, 107, 53], [12, 115, 54], [12, 131, 62], [14, 151, 71], [14, 175, 83], [16, 211, 100], [18, 239, 113], [21, 270, 128]
+  ];
+  static rsBlockTableH = [
+    [1, 26, 9], [1, 44, 16], [2, 35, 13], [4, 25, 9], [2, 33, 15], [4, 24, 11], [4, 28, 13], [4, 33, 15], [4, 39, 17], [4, 45, 19],
+    [4, 58, 25], [6, 69, 29], [6, 74, 31], [8, 86, 36], [10, 95, 39], [12, 116, 48], [14, 140, 58], [16, 168, 70], [17, 197, 83], [19, 224, 94]
+  ];
 }
 
 const QRUtil = {
   PATTERN_POSITION_TABLE: [
-    [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50]
+    [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50],
+    [6, 30, 54], [6, 32, 58], [6, 34, 62], [6, 26, 46, 66], [6, 26, 48, 70], [6, 26, 50, 74], [6, 30, 54, 78], [6, 30, 56, 82], [6, 30, 58, 86], [6, 34, 62, 90]
   ],
   G15: (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
   G18: (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
@@ -662,7 +672,7 @@ for (let i = 0; i < 255; i++) {
     v ^= 0x11d;
   }
 }
-QRUtil.EXP_TABLE[255] = QRUtil.EXP_TABLE[0]; // for convenience in multiply
+QRUtil.EXP_TABLE[255] = QRUtil.EXP_TABLE[0];
 
 class QRBitBufferImpl implements QRBitBuffer {
   buffer: number[] = [];
