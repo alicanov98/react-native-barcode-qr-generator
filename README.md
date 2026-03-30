@@ -1,55 +1,57 @@
 # react-native-barcode-qr-generator
 
 <div align="center">
-  <p align="center">
-    <img src="https://img.shields.io/badge/UI-Premium-blueviolet?style=for-the-badge" alt="Aesthetic" />
-    <img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript" alt="Type" />
-    <img src="https://img.shields.io/badge/Dependencies-Zero-green?style=for-the-badge" alt="Deps" />
-    <img src="https://img.shields.io/badge/iOS-Supported-black?style=for-the-badge&logo=apple" alt="iOS" />
-    <img src="https://img.shields.io/badge/Android-Supported-green?style=for-the-badge&logo=android" alt="Android" />
-  </p>
+  <img src="https://img.shields.io/badge/UI-Premium-blueviolet?style=for-the-badge" alt="Aesthetic" />
+  <img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript" alt="Type" />
+  <img src="https://img.shields.io/badge/New_Architecture-Ready-orange?style=for-the-badge" alt="New Architecture" />
+  <img src="https://img.shields.io/badge/Dependencies-Minimal-green?style=for-the-badge" alt="Deps" />
+  <img src="https://img.shields.io/badge/iOS-Supported-black?style=for-the-badge&logo=apple" alt="iOS" />
+  <img src="https://img.shields.io/badge/Android-Supported-green?style=for-the-badge&logo=android" alt="Android" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
 </div>
 
-Modern, **TypeScript-first**, SVG-based barcode and QR code generator for React Native. This library provides a high-performance, dependency-free way to generate sharp barcodes and QR codes that scan instantly on both iOS and Android.
+<br/>
+
+Modern, **TypeScript-first**, SVG-based barcode and QR code generator for React Native. This library provides a high-performance way to generate sharp, scanable codes that work flawlessly on both iOS and Android.
 
 ---
 
-## 🌟 Features
+## 🌟 Key Features
 
-- **✅ Native Scanability**: Optimized SVG paths with high-precision rounding to ensure perfect scanning on Android (even with 100+ characters).
-- **⚡ SVG Rendering**: Built on `react-native-svg` for crisp, resolution-independent quality.
-- **🛡️ Custom QR Engine**: Robust internal QR generator supporting high-capacity data (up to version 20+).
-- **🚀 Ultra Fast**: Leverages `useMemo` for efficient rendering and zero performance lag.
-- **🎨 Complete Control**: Customize Error Correction Level (ECL), margins, colors, and sizing.
+- **⚛️ New Architecture Ready**: Fully compatible with the Fabric renderer and TurboModules.
+- **✅ Optimized for Mobile**: Precision-calculated SVG paths ensure perfect scanning even for long strings on Android.
+- **⚡ Built with SVG**: Powered by `react-native-svg` for crisp, resolution-independent rendering.
+- **🛡️ Custom QR Engine**: Robust internal QR generator with support for variable capacity and Error Correction Levels.
+- **🚀 Memory Efficient**: Uses `useMemo` to prevent redundant re-renders and maintain buttery-smooth performance.
+- **🎨 Highly Customizable**: Fine-tune colors, sizing, margins, and error correction to match your brand's aesthetic.
 
 ---
 
 ## 📦 Installation
 
-Since this library uses `react-native-svg` for rendering, ensure you have it installed.
+This library requires `react-native-svg` for rendering. Ensure it's installed in your project.
 
-### Using npm
+### 1. Install dependencies
 ```bash
+# Using npm
 npm install react-native-svg react-native-barcode-qr-generator
-```
 
-### Using yarn
-```bash
+# Using yarn
 yarn add react-native-svg react-native-barcode-qr-generator
 ```
 
-### iOS Setup (Required)
-If you are developing for iOS, don't forget to install the pods:
+### 2. iOS Setup
+If you are developing for iOS, install the native pods:
 ```bash
 cd ios && pod install && cd ..
 ```
 
 ---
 
-## 🚀 Usage
+## 🚀 Usage Examples
 
-### QR Code (Highly Recommended)
-For QR codes, use the `size` prop and `ecl` (Error Correction Level) for the best results on mobile screens.
+### QR Code Generation
+QR codes are square and responsive. Use the `size` prop and `ecl` (Error Correction Level) for best results.
 
 ```tsx
 import Barcode from 'react-native-barcode-qr-generator';
@@ -60,40 +62,47 @@ const MyComponent = () => (
     type="qrcode"
     size={250}      // Fixed square size (recommended)
     ecl="M"        // Error Correction: L, M, Q, H (M is best for mobile)
+    lineColor="#000000"
+    background="#ffffff"
   />
 );
 ```
 
-### Classic Barcode
+### Traditional Barcode
+Ideal for inventory or member IDs. You can specify different formats like `CODE128`.
+
 ```tsx
 <Barcode
-  value="alicanov98"
+  value="ALICANOV98"
   format="CODE128"
-  width={2}
-  height={100}
+  width={2}          // Width of a single bar module
+  height={100}       // Height of the barcode
   lineColor="#000000"
   background="#ffffff"
-  text="MY BARCODE"
+  text="USER-ID: 1774" // Optional label text
 />
 ```
 
-### 🎨 Advanced Styling
+### 🎨 Advanced Styling & Responsiveness
+Use `maxWidth` to ensure the barcode fits within its container regardless of the value length.
+
 ```tsx
 <Barcode
-  value="CUSTOM-STYLE"
+  value="STYLISH-BARCODE"
   format="CODE128"
-  lineColor="#2e7d32"      // Custom bar color (Green)
-  background="#fcfcfc"     // Custom container background
-  width={2}
-  height={100}
-  text="GREEN BARCODE"
-  textStyle={{             // Styling for the text label
-    color: '#2e7d32',
-    fontSize: 18,
-    fontWeight: 'bold',
+  maxWidth={300}           // Prevents overflow on smaller screens
+  lineColor="#6200ee"      // Dark Purple bars
+  background="#f5f5f5"     // Light Gray background
+  text="PREMIUM"
+  textStyle={{             // Custom style for the label
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#6200ee',
+    marginTop: 10,
   }}
-  style={{                 // Styling for the outer container
-    padding: 20,
+  style={{                 // Custom style for the container
+    padding: 15,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: '#e0e0e0',
   }}
@@ -102,37 +111,58 @@ const MyComponent = () => (
 
 ---
 
-## 📝 Props
+## 📋 Comprehensive Specs
+
+### Supported Barcode Formats
+The library supports a wide range of common barcode formats:
+
+- **Full CODE128 (A, B, C)**
+- **CODE39**
+- **EAN13, EAN8, EAN5, EAN2**
+- **UPC, UPCE**
+- **ITF, ITF14**
+- **MSI, MSI10, MSI11, MSI1010, MSI1110**
+- **Pharmacode**
+- **Codabar**
+
+### Props Reference
 
 | Prop | Type | Description | Default |
 | :--- | :--- | :--- | :--- |
-| `value` | `string` | The text to encode (Required) | `''` |
-| `type` | `'barcode' \| 'qrcode'` | Type of engine to use | `'barcode'` |
-| `size` | `number` | Fixed dimension (Width & Height) for QR codes | - |
+| `value` | `string` | The data to encode (Required) | `''` |
+| `type` | `'barcode' \| 'qrcode'` | Engine type to use | `'barcode'` |
+| `size` | `number` | Fixed dimension (Width/Height) for QR codes | - |
 | `ecl` | `'L' \| 'M' \| 'Q' \| 'H'` | QR Error Correction Level | `'M'` |
-| `format` | `BarcodeFormat` | Barcode encoding (CODE128, EAN, etc.) | `'CODE128'` |
-| `width` | `number` | Single bar/module width | `2` |
-| `height` | `number` | Height of the bars | `100` |
-| `lineColor` | `string` | Bar/Module color | `#000000` |
-| `background` | `string` | Quiet zone background color | `#ffffff` |
-| `text` | `ReactNode` | Optional label displayed below | - |
-| `textStyle` | `TextStyle` | Styling for the label text | - |
-| `style` | `ViewStyle` | Styles for the outer container | - |
-| `onError` | `(err: Error) => void` | Error callback | - |
+| `format` | `BarcodeFormat` | Encoding algorithm for barcodes | `'CODE128'` |
+| `width` | `number` | Individual bar module width | `2` |
+| `maxWidth` | `number` | Maximum allowed width for the barcode | - |
+| `height` | `number` | Barcode height in pixels | `100` |
+| `lineColor` | `string` | Color of the bars or QR modules | `#000000` |
+| `background` | `string` | Quiet zone/background color | `#ffffff` |
+| `text` | `ReactNode` | Optional text label below the code | - |
+| `textStyle` | `StyleProp<TextStyle>`| Styles for the label text | - |
+| `style` | `StyleProp<ViewStyle>` | Styles for the outer container | - |
+| `onError` | `(err: Error) => void`| Callback for encoding errors | - |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request on the [GitHub repository](https://github.com/alicanov98/react-native-barcode-qr-generator).
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git checkout origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## Support & Donation ☕️
 
-If this library helped you, consider supporting its development!
+If you find this library useful, please consider supporting its development!
 
 <div align="center">
   <a href="https://kofe.al/@alicanov98">
-    <img src="https://kofe.al/storage/images/qrcodes/alicanov98-1774646802.png" width="200" alt="Support QR Code" />
+    <img src="https://kofe.al/storage/images/qrcodes/alicanov98-1774646802.png" width="180" alt="Support QR Code" />
   </a>
   <br/>
   <a href="https://kofe.al/@alicanov98">
@@ -144,4 +174,6 @@ If this library helped you, consider supporting its development!
 
 ## 📄 License
 
-MIT © [alicanov98](https://github.com/alicanov98) | Created with ❤️ by Alijanov
+Distributed under the MIT License. See `LICENSE` for more information.
+
+Developed with ❤️ by **[Alijanov](https://github.com/alicanov98)**

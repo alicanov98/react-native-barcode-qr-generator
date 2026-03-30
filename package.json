@@ -1,7 +1,7 @@
 {
   "name": "react-native-barcode-qr-generator",
   "version": "1.0.7",
-  "description": "Modern barcode generator for React Native using SVG",
+  "description": "High-performance, SVG-aligned Barcode and QR Code generator for React Native. Supports New Architecture (Fabric), multiple formats (CODE128, EAN, UPC, etc.), and customizable QR codes.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/index.d.ts",
@@ -36,11 +36,22 @@
   },
   "keywords": [
     "react-native",
+    "barcode",
+    "qrcode",
+    "qr-code",
+    "generator",
+    "svg",
+    "react-native-svg",
+    "fabric",
+    "new-architecture",
     "ios",
     "android",
-    "barcode",
-    "generator",
-    "svg"
+    "code128",
+    "ean13",
+    "upc",
+    "barcode-generator",
+    "qr-generator",
+    "typescript"
   ],
   "repository": {
     "type": "git",
