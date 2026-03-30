@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+dist/
+lib/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+
+# macOS
+.DS_Store
+
+# React Native
+ios/build/
+android/build/
+android/.gradle/
+*.iml
+*.ipr
+*.iws
+
+# Expo
+.expo/
+dist/
+
+# IDEs
+.idea/
+.vscode/
+
+# Build artifacts
+*.log
+coverage/
+
+# Example Project
+example/
