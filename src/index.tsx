@@ -157,7 +157,7 @@ const Barcode: React.FC<BarcodeProps> = ({
   };
 
   const drawSvgQrCode = (inputText: string) => {
-    const qr = new QRCodeModel(-1, 'Q');
+    const qr = new QRCodeModel(-1, 'M');
     qr.addData(inputText);
     qr.make();
     const rowCount = qr.getModuleCount();
@@ -165,8 +165,7 @@ const Barcode: React.FC<BarcodeProps> = ({
     const cellSize = width;
 
     // QR Code standard recommends a quiet zone of 4 modules.
-    // We'll add a small margin to ensure readability on all devices.
-    const margin = 2; // Reduced from 4 to keep it compact but still helpful
+    const margin = 4;
     const size = (rowCount + margin * 2) * cellSize;
 
     for (let row = 0; row < rowCount; row++) {
