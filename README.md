@@ -1,6 +1,6 @@
 # react-native-barcode-qr-generator
 
-![Barcode Generator](/images/example.png)
+<img src="/images/example.png" width="350" alt="Barcode Generator" />
 
 Modern, TypeScript-first, SVG-based barcode and QR code generator for React Native. This library provides a simple, performant way to generate high-quality barcodes and QR codes using standard SVG paths.
 
