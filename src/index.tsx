@@ -87,6 +87,11 @@ export interface BarcodeProps {
    */
   size?: number;
   /**
+   * QR Error Correction Level
+   * @default 'M'
+   */
+  ecl?: 'L' | 'M' | 'Q' | 'H';
+  /**
    * an optional error handler
    */
   onError?: (error: Error) => void;
@@ -106,6 +111,7 @@ const Barcode: React.FC<BarcodeProps> = ({
   onError,
   maxWidth,
   size,
+  ecl = 'M',
 }) => {
   const drawRect = (x: number, y: number, w: number, h: number) => {
     return `M${x},${y}h${w}v${h}h-${w}z`;
@@ -157,7 +163,7 @@ const Barcode: React.FC<BarcodeProps> = ({
   };
 
   const drawSvgQrCode = (inputText: string) => {
-    const qr = new QRCodeModel(-1, 'M');
+    const qr = new QRCodeModel(-1, ecl);
     qr.addData(inputText);
     qr.make();
     const rowCount = qr.getModuleCount();
@@ -265,6 +271,7 @@ const Barcode: React.FC<BarcodeProps> = ({
     maxWidth,
     onError,
     size,
+    ecl,
   ]);
 
   const barsData = bars as string[];
