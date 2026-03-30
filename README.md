@@ -4,7 +4,6 @@
   <img src="https://img.shields.io/badge/UI-Premium-blueviolet?style=for-the-badge" alt="Aesthetic" />
   <img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript" alt="Type" />
   <img src="https://img.shields.io/badge/New_Architecture-Ready-orange?style=for-the-badge" alt="New Architecture" />
-  <img src="https://img.shields.io/badge/Dependencies-Minimal-green?style=for-the-badge" alt="Deps" />
   <img src="https://img.shields.io/badge/iOS-Supported-black?style=for-the-badge&logo=apple" alt="iOS" />
   <img src="https://img.shields.io/badge/Android-Supported-green?style=for-the-badge&logo=android" alt="Android" />
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
@@ -58,7 +57,7 @@ import Barcode from 'react-native-barcode-qr-generator';
 
 const MyComponent = () => (
   <Barcode
-    value="https://github.com/alicanov98/react-native-barcode-qr-generator"
+    value="https://github.com/alicanov98"
     type="qrcode"
     size={250}      // Fixed square size (recommended)
     ecl="M"        // Error Correction: L, M, Q, H (M is best for mobile)
