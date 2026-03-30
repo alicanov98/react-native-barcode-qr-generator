@@ -83,6 +83,10 @@ export interface BarcodeProps {
    */
   style?: StyleProp<ViewStyle>;
   /**
+   * fixed size for the code (mostly for QR codes)
+   */
+  size?: number;
+  /**
    * an optional error handler
    */
   onError?: (error: Error) => void;
@@ -101,6 +105,7 @@ const Barcode: React.FC<BarcodeProps> = ({
   style,
   onError,
   maxWidth,
+  size,
 }) => {
   const drawRect = (x: number, y: number, w: number, h: number) => {
     return `M${x},${y}h${w}v${h}h-${w}z`;
@@ -129,7 +134,7 @@ const Barcode: React.FC<BarcodeProps> = ({
           drawRect(
             x - singleBarWidth * barConsecutiveCount,
             yFrom,
-            singleBarWidth * barConsecutiveCount,
+            singleBarWidth * barConsecutiveCount + 0.1, // Added overlap
             height
           )
         );
@@ -142,7 +147,7 @@ const Barcode: React.FC<BarcodeProps> = ({
         drawRect(
           (binary.length - barConsecutiveCount) * singleBarWidth,
           yFrom,
-          singleBarWidth * barConsecutiveCount,
+          singleBarWidth * barConsecutiveCount + 0.1, // Added overlap
           height
         )
       );
@@ -177,8 +182,8 @@ const Barcode: React.FC<BarcodeProps> = ({
             drawRect(
               (startCol + margin) * cellSize,
               (row + margin) * cellSize,
-              (col - startCol) * cellSize,
-              cellSize
+              (col - startCol) * cellSize + 0.1, // Added overlap
+              cellSize + 0.1 // Added overlap
             )
           );
         } else {
@@ -187,7 +192,7 @@ const Barcode: React.FC<BarcodeProps> = ({
       }
     }
 
-    return { rects, size };
+    return { rects, size, rowCount };
   };
 
   const encode = (inputText: string, Encoder: any) => {
@@ -211,11 +216,13 @@ const Barcode: React.FC<BarcodeProps> = ({
   const { bars, barCodeWidth, barCodeHeight } = useMemo(() => {
     try {
       if (type === 'qrcode') {
-        const { rects, size } = drawSvgQrCode(value);
+        const { rects, size: qrInternalSize } = drawSvgQrCode(value);
+        const finalSize = size || qrInternalSize;
         return {
           bars: rects,
-          barCodeWidth: size,
-          barCodeHeight: size,
+          barCodeWidth: finalSize,
+          barCodeHeight: finalSize,
+          qrSize: qrInternalSize,
         };
       }
 
@@ -246,6 +253,7 @@ const Barcode: React.FC<BarcodeProps> = ({
       bars: [],
       barCodeWidth: 0,
       barCodeHeight: 0,
+      qrSize: 0,
     };
   }, [
     type,
@@ -257,12 +265,21 @@ const Barcode: React.FC<BarcodeProps> = ({
     background,
     maxWidth,
     onError,
+    size,
   ]);
+
+  const barsData = bars as string[];
+  const svgQrSize = (bars as any).qrSize;
 
   return (
     <View style={[{ backgroundColor: background, alignItems: 'center' }, style]}>
-      <Svg height={barCodeHeight} width={barCodeWidth} fill={lineColor}>
-        <Path d={bars.join(' ')} />
+      <Svg
+        height={barCodeHeight}
+        width={barCodeWidth}
+        fill={lineColor}
+        viewBox={type === 'qrcode' ? `0 0 ${svgQrSize || barCodeWidth} ${svgQrSize || barCodeHeight}` : undefined}
+      >
+        <Path d={barsData.join ? barsData.join(' ') : ''} />
       </Svg>
       {text && (
         <Text style={[{ textAlign: 'center' }, textStyle] as any}>{text}</Text>
