@@ -42,7 +42,10 @@
     "generator",
     "svg"
   ],
-  "repository": "https://github.com/alicanov98/react-native-barcode-qr-generator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alicanov98/react-native-barcode-qr-generator.git"
+  },
   "author": "Alijanov <https://github.com/alicanov98>",
   "license": "MIT",
   "bugs": {

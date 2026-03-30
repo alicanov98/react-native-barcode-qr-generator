@@ -1,5 +1,11 @@
 # react-native-barcode-qr-generator
 
+![Aesthetic](https://img.shields.io/badge/UI-Premium-blueviolet)
+![Type](https://img.shields.io/badge/TypeScript-Ready-blue)
+![Deps](https://img.shields.io/badge/Dependencies-Zero-green)
+![iOS](https://img.shields.io/badge/iOS-Supported-black?logo=apple)
+![Android](https://img.shields.io/badge/Android-Supported-green?logo=android)
+
 <img src="/images/example.png" width="300" alt="Barcode Generator" />
 
 Modern, TypeScript-first, SVG-based barcode and QR code generator for React Native. This library provides a simple, performant way to generate high-quality barcodes and QR codes using standard SVG paths.
@@ -67,7 +73,7 @@ import Barcode from 'react-native-barcode-qr-generator';
 
 const MyComponent = () => (
   <Barcode
-    value="https://github.com/alicanov98/alicanov98"
+    value="https://github.com/alicanov98/react-native-barcode-qr-generator"
     type="qrcode"
     width={5}
   />
@@ -130,7 +136,7 @@ You can fully customize the barcode's look and feel, including colors and label 
 
 ## 🤝 Contributing
 
-Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request on the [GitHub repository](https://github.com/alicanov98/alicanov98).
+Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request on the [GitHub repository](https://github.com/alicanov98/react-native-barcode-qr-generator).
 
 ## Support & Donation ☕️
 
