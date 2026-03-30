@@ -12,8 +12,6 @@
 
 Modern, **TypeScript-first**, SVG-based barcode and QR code generator for React Native. This library provides a high-performance, dependency-free way to generate sharp barcodes and QR codes that scan instantly on both iOS and Android.
 
-Developed with ❤️ by **Alijanov**.
-
 ---
 
 ## 🌟 Features
