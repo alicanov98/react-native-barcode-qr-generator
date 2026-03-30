@@ -1,6 +1,6 @@
 {
   "name": "react-native-barcode-qr-generator",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Modern barcode generator for React Native using SVG",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
